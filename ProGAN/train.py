@@ -12,11 +12,13 @@ from utils import (
     save_checkpoint,
     load_checkpoint,
     generate_examples,
+    generate_examples_fixed_noise,
 )
 from model import Discriminator, Generator
 from math import log2
 from tqdm import tqdm
 import config
+import os
 
 torch.backends.cudnn.benchmarks = True
 
@@ -182,6 +184,16 @@ def main():
             if config.SAVE_MODEL:
                 save_checkpoint(gen, opt_gen, filename=config.CHECKPOINT_GEN)
                 save_checkpoint(critic, opt_critic, filename=config.CHECKPOINT_CRITIC)
+                print("Generating Examples")
+                generate_examples(gen=gen, steps=100)
+                print("Generating from Fixed Noise")
+                generate_examples_fixed_noise(gen=gen, steps=100)
+                print("Copying Gen Checkpoint")
+                os.system(f"cp ./{config.CHECKPOINT_GEN} ./drive/MyDrive/ProGAN/genE{epoch+1}S{str(4 * 2 ** step)}.pth") # Generator
+                print("Copying Critic Checkpoint")
+                os.system(f"cp ./{config.CHECKPOINT_GEN} ./drive/MyDrive/ProGAN/criticE{epoch+1}S{str(4 * 2 ** step)}.pth") # Critic
+                print("Copying Output Images")
+                os.system(f"cp -R ./outputImages/* ./drive/MyDrive/ProGAN/outputImagesE{epoch+1}S{str(4 * 2 ** step)}")
 
         step += 1  # progress to the next img size
 
