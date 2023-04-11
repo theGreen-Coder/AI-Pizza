@@ -86,5 +86,17 @@ def generate_examples(gen, steps, truncation=0.7, n=100):
         with torch.no_grad():
             noise = torch.tensor(truncnorm.rvs(-truncation, truncation, size=(1, config.Z_DIM, 1, 1)), device=config.DEVICE, dtype=torch.float32)
             img = gen(noise, alpha, steps)
-            save_image(img*0.5+0.5, f"saved_examples/img_{i}.png")
+            save_image(img*0.5+0.5, f"./outputImages/example_{i}.png")
+    gen.train()
+
+def generate_examples_fixed_noise(gen, steps):
+    """
+    Tried using truncation trick here but not sure it actually helped anything, you can
+    remove it if you like and just sample from torch.randn
+    """
+    gen.eval()
+    alpha = 1.0
+    with torch.no_grad():
+        img = gen(config.FIXED_NOISE, alpha, steps)
+        save_image(img*0.5+0.5, f"./outputImages/fixedNoise.png")
     gen.train()
