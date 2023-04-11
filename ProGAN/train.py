@@ -185,9 +185,9 @@ def main():
                 save_checkpoint(gen, opt_gen, filename=config.CHECKPOINT_GEN)
                 save_checkpoint(critic, opt_critic, filename=config.CHECKPOINT_CRITIC)
                 print("Generating Examples")
-                generate_examples(gen=gen, steps=100)
+                generate_examples(gen=gen, steps=0)
                 print("Generating from Fixed Noise")
-                generate_examples_fixed_noise(gen=gen, steps=100)
+                generate_examples_fixed_noise(gen=gen, steps=0)
                 print("Copying Gen Checkpoint")
                 os.system(f"cp ./{config.CHECKPOINT_GEN} ./drive/MyDrive/ProGAN/genE{epoch+1}S{str(4 * 2 ** step)}.pth") # Generator
                 print("Copying Critic Checkpoint")
