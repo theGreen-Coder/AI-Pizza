@@ -185,7 +185,7 @@ def main():
                 save_checkpoint(gen, opt_gen, filename=config.CHECKPOINT_GEN)
                 save_checkpoint(critic, opt_critic, filename=config.CHECKPOINT_CRITIC)
                 print("Generating Examples")
-                generate_examples(gen=gen, steps=0)
+                generate_examples(gen=gen, steps=8)
                 print("Generating from Fixed Noise")
                 generate_examples_fixed_noise(gen=gen, steps=0)
                 print("Copying Gen Checkpoint")
